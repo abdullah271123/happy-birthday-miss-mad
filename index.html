@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>سالگرہ مبارک مدیحہ ❤️</title>
+  <meta name="theme-color" content="#1a0b22" />
+  <meta name="description" content="مدیحہ کے لیے ایک چھوٹا سا سرپرائز ❤️" />
+
+  <!-- Open Graph (link preview when shared) -->
+  <meta property="og:title" content="سالگرہ مبارک مدیحہ ❤️" />
+  <meta property="og:description" content="تمہارے لیے ایک چھوٹا سا سرپرائز... 💌" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="photos/photo1.jpg" />
+
+  <!-- Heart emoji favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>" />
+
+  <!-- Fonts: Nastaliq for Urdu, Aref Ruqaa for decorative titles, Great Vibes + Playfair for English accents -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Great+Vibes&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Preload audio so it never starts late -->
+  <link rel="preload" href="photos/photo1.jpg" as="image" />
+</head>
+<body class="is-splash">
+
+  <!-- Fixed photo background (photo1) + colour wash, visible behind everything -->
+  <div class="bg-photo" aria-hidden="true"></div>
+  <div class="bg-wash" aria-hidden="true"></div>
+
+  <!-- Ambient canvas: stars, petals, hearts, bokeh (behind content) -->
+  <canvas id="ambient" aria-hidden="true"></canvas>
+
+  <!-- Audio elements -->
+  <audio id="audio1" preload="auto" loop playsinline></audio>
+  <audio id="audio2" preload="auto" playsinline></audio>
+
+  <!-- ═════════════ SURPRISE ENVELOPE SPLASH ═════════════ -->
+  <section id="splash" aria-label="لفافہ کھولیں">
+    <div class="splash-loader" id="splashLoader" aria-label="لوڈ ہو رہا ہے">
+      <div class="loader-heart"></div>
+    </div>
+
+    <div class="envelope-wrap" id="envelopeWrap" role="button" tabindex="0" aria-label="لفافہ کھولنے کے لیے ٹیپ کریں" aria-disabled="true">
+      <div class="env-orbit" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="env-ring" aria-hidden="true"></div>
+
+      <div class="envelope" id="envelope">
+        <div class="env-back"></div>
+
+        <!-- Letter that slides out -->
+        <div class="letter" id="letter">
+          <div class="letter-inner">
+            <div class="letter-ornament" aria-hidden="true"></div>
+            <p class="letter-line" data-line="0"></p>
+            <p class="letter-line" data-line="1"></p>
+            <p class="letter-line" data-line="2"></p>
+          </div>
+        </div>
+
+        <!-- Optional polaroid peeking out -->
+        <div class="env-polaroid" id="envPolaroid" aria-hidden="true"><img alt="" /></div>
+
+        <div class="env-front">
+          <svg class="env-pocket" viewBox="0 0 300 200" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="pocketG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fbf1e4"/><stop offset="1" stop-color="#ecd9c3"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 0 L150 112 L300 0 L300 200 L0 200 Z" fill="url(#pocketG)"/>
+            <path d="M0 200 L150 100 L300 200" fill="none" stroke="#d9a98f" stroke-width="1.2" opacity=".6"/>
+          </svg>
+          <p class="env-to" id="envTo"></p>
+        </div>
+
+        <div class="env-flap" id="envFlap">
+          <svg viewBox="0 0 300 130" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="flapG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#f6e6d3"/><stop offset="1" stop-color="#e7cdb3"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 0 L300 0 L150 128 Z" fill="url(#flapG)" stroke="#d8a48a" stroke-width="1.5"/>
+          </svg>
+        </div>
+
+        <div class="seal" id="seal" aria-hidden="true">
+          <div class="seal-half seal-l"><span>م</span></div>
+          <div class="seal-half seal-r"><span>م</span></div>
+        </div>
+        <div class="env-light" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <p class="splash-hint" id="splashHint"></p>
+    <p class="splash-sound" id="splashSound"></p>
+  </section>
+
+  <!-- ═════════════ MAIN PAGE ═════════════ -->
+  <main id="main" aria-hidden="true">
+
+    <!-- HERO -->
+    <header class="hero" id="hero">
+      <div class="moon" aria-hidden="true"></div>
+      <div class="hero-text">
+        <h1 class="hero-title" id="heroTitle" tabindex="0" role="button" aria-label="سالگرہ مبارک مدیحہ"></h1>
+        <p class="hero-en">Happy Birthday <span id="heroNameEn">Madiha</span></p>
+        <p class="hero-couplet" id="heroCouplet"></p>
+      </div>
+
+      <div class="cake-zone">
+        <button class="cake" id="cake" aria-label="موم بتی بجھائیں">
+          <svg viewBox="0 0 220 220" aria-hidden="true">
+            <defs>
+              <linearGradient id="cakeA" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f7c6d5"/><stop offset="1" stop-color="#d98aa6"/></linearGradient>
+              <linearGradient id="cakeB" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#7d3b6b"/><stop offset="1" stop-color="#4a1e44"/></linearGradient>
+              <radialGradient id="flameG" cx=".5" cy=".7" r=".6"><stop offset="0" stop-color="#fff7d6"/><stop offset=".45" stop-color="#ffd36b"/><stop offset="1" stop-color="#ff7a3d" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="110" cy="200" rx="92" ry="10" fill="#000" opacity=".25"/>
+            <rect x="30" y="128" width="160" height="66" rx="14" fill="url(#cakeB)"/>
+            <path d="M30 140 q20 18 40 0 q20 18 40 0 q20 18 40 0 q20 18 40 0" fill="none" stroke="#f3c9a8" stroke-width="5" stroke-linecap="round"/>
+            <rect x="52" y="84" width="116" height="52" rx="12" fill="url(#cakeA)"/>
+            <path d="M52 94 q14 14 29 0 q14 14 29 0 q14 14 29 0 q14 14 29 0" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".9"/>
+            <g class="cake-dots" fill="#f3c9a8"><circle cx="60" cy="170" r="3"/><circle cx="90" cy="176" r="3"/><circle cx="120" cy="170" r="3"/><circle cx="150" cy="176" r="3"/><circle cx="175" cy="168" r="3"/></g>
+            <rect x="104" y="44" width="12" height="42" rx="4" fill="#fff4e8"/>
+            <path d="M104 52 l12 -6 M104 62 l12 -6 M104 72 l12 -6 M104 82 l12 -6" stroke="#e79ab4" stroke-width="3"/>
+            <line x1="110" y1="44" x2="110" y2="36" stroke="#333" stroke-width="2"/>
+            <g class="flame">
+              <circle cx="110" cy="24" r="22" fill="url(#flameG)" class="flame-glow"/>
+              <path d="M110 4 C120 18 120 28 110 36 C100 28 100 18 110 4 Z" fill="#ffcc4d"/>
+              <path d="M110 16 C115 24 115 29 110 34 C105 29 105 24 110 16 Z" fill="#fff4c2"/>
+            </g>
+            <g class="smoke" fill="none" stroke="#e8d9ef" stroke-width="2" stroke-linecap="round">
+              <path d="M110 34 c-6 -8 6 -14 0 -22 c-6 -8 6 -14 0 -22"/>
+            </g>
+          </svg>
+        </button>
+        <p class="cake-hint" id="cakeHint"></p>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true"><span class="sh-heart">❤</span><span class="sh-line"></span></div>
+    </header>
+
+    <!-- SECTION 1: WISHES -->
+    <section class="sec" id="wishes">
+      <div class="sec-head">
+        <div class="divider" aria-hidden="true"></div>
+        <h2><span class="ur" id="wishesTitle"></span><span class="en">Birthday Wishes</span></h2>
+      </div>
+      <div class="wish-grid" id="wishGrid"></div>
+    </section>
+
+    <!-- SECTION 2: OUR STORY TIMELINE -->
+    <section class="sec" id="story">
+      <div class="sec-head">
+        <div class="divider" aria-hidden="true"></div>
+        <h2><span class="ur" id="storyTitle"></span><span class="en">Our Story</span></h2>
+      </div>
+      <div class="timeline" id="timeline">
+        <div class="tl-track" aria-hidden="true"><div class="tl-fill" id="tlFill"></div></div>
+        <div class="tl-traveller" id="tlTraveller" aria-hidden="true"><span>🚲</span></div>
+        <div class="tl-items" id="tlItems"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: MY LOVE -->
+    <section class="sec" id="love">
+      <div class="sec-head">
+        <div class="divider" aria-hidden="true"></div>
+        <h2><span class="ur" id="loveTitle"></span><span class="en">My Love For You</span></h2>
+      </div>
+      <div class="love-card glass reveal">
+        <div class="love-letter" id="loveLetter"></div>
+        <svg class="ecg" id="ecg" viewBox="0 0 600 120" aria-hidden="true">
+          <path class="ecg-path" d="M0 70 H120 l12 -6 l10 6 H200 l10 -48 l14 92 l12 -60 l8 14 H330 l10 -8 l10 8 H400 C410 70 412 40 432 40 C448 40 456 56 456 56 C456 56 464 40 480 40 C500 40 502 70 490 84 L456 116 L422 84 C410 70 410 70 400 70" />
+        </svg>
+        <div class="love-counter">
+          <span class="lc-num" id="loveCounter">۰</span>
+          <span class="lc-label" id="loveCounterLabel"></span>
+        </div>
+        <p class="couplet" id="loveCouplet"></p>
+      </div>
+    </section>
+
+    <!-- SECTION 4: DREAMS -->
+    <section class="sec" id="dreams">
+      <div class="sec-head">
+        <div class="divider" aria-hidden="true"></div>
+        <h2><span class="ur" id="dreamsTitle"></span><span class="en">My Dreams For Us</span></h2>
+      </div>
+      <div class="dream-grid" id="dreamGrid"></div>
+      <div class="promise-frame reveal">
+        <div class="pf-border" aria-hidden="true"></div>
+        <div class="pf-inner">
+          <p class="pf-title">وعدہ</p>
+          <p class="pf-text" id="vaadaText"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PROMISES -->
+    <section class="sec" id="promises">
+      <div class="sec-head">
+        <div class="divider" aria-hidden="true"></div>
+        <h2><span class="ur" id="promisesTitle"></span><span class="en">My Promise to Keep You Happy</span></h2>
+      </div>
+      <ul class="promise-list" id="promiseList"></ul>
+    </section>
+
+    <!-- SECTION 6: PHOTO STRIP -->
+    <section class="sec sec-photos" id="photos">
+      <div class="sec-head">
+        <div class="divider" aria-hidden="true"></div>
+        <h2><span class="ur" id="photosTitle"></span><span class="en">Moments of You</span></h2>
+      </div>
+      <div class="strip" id="strip" dir="ltr"><div class="strip-track" id="stripTrack"></div></div>
+    </section>
+
+    <!-- BOTTOM BUTTON -->
+    <section class="sec gift-sec" id="gift">
+      <p class="gift-line" id="giftLine"></p>
+      <div class="gift-pointer" aria-hidden="true">
+        <svg class="cupid-arrow" viewBox="0 0 200 120">
+          <path class="ca-path" d="M190 10 C150 10 120 30 110 60 C100 90 70 100 40 96" fill="none" stroke="#f3c9a8" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8"/>
+          <g class="ca-head" transform="translate(40 96) rotate(170)">
+            <path d="M0 0 L16 -8 L12 0 L16 8 Z" fill="#ff8fab"/>
+          </g>
+          <g class="ca-heart" transform="translate(178 6)">
+            <path d="M0 6 C0 -2 10 -4 12 4 C14 -4 24 -2 24 6 C24 14 12 22 12 22 C12 22 0 14 0 6 Z" fill="#ff6f91"/>
+          </g>
+        </svg>
+      </div>
+      <div class="gift-wrap">
+        <span class="gift-ring" aria-hidden="true"></span>
+        <span class="gift-ring r2" aria-hidden="true"></span>
+        <button class="gift-btn" id="giftBtn"></button>
+        <div class="gift-hearts" id="giftHearts" aria-hidden="true"></div>
+      </div>
+      <p class="footer-note">made with ❤️ for Madiha</p>
+    </section>
+  </main>
+
+  <!-- ═════════════ CINEMATIC FILM OVERLAY ═════════════ -->
+  <div id="film" aria-hidden="true" aria-label="ویڈیو">
+    <div class="film-stage" id="filmStage"></div>
+    <canvas id="filmFx" aria-hidden="true"></canvas>
+    <div class="film-grain" aria-hidden="true"></div>
+    <div class="film-vignette" aria-hidden="true"></div>
+    <div class="film-leak" aria-hidden="true"></div>
+    <div class="film-loader" id="filmLoader"><div class="loader-heart"></div></div>
+
+    <div class="film-controls" id="filmControls">
+      <button class="fc-btn" id="fcPlay" aria-label="روکیں / چلائیں">❚❚</button>
+      <button class="fc-btn" id="fcMute" aria-label="آواز بند / چالو">🔊</button>
+      <button class="fc-btn" id="fcReplay" aria-label="دوبارہ">↻</button>
+      <div class="fc-progress" aria-hidden="true"><div id="fcBar"></div></div>
+      <button class="fc-btn" id="fcClose" aria-label="بند کریں">✕</button>
+    </div>
+
+    <div class="film-end" id="filmEnd">
+      <div class="fe-heart" aria-hidden="true">❤</div>
+      <p class="fe-name">مدیحہ</p>
+      <p class="fe-en">Madiha</p>
+      <div class="fe-btns">
+        <button class="pill" id="feReplay">دوبارہ دیکھیں</button>
+        <button class="pill ghost" id="feBack">واپس جائیں</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="تصویر">
+    <button class="lb-close" id="lbClose" aria-label="بند کریں">✕</button>
+    <figure><img id="lbImg" alt="" /><figcaption id="lbCap"></figcaption></figure>
+  </div>
+
+  <!-- FX canvas: confetti, sparkles, fireworks, cursor trail (above content) -->
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- Floating mute button -->
+  <button id="muteBtn" class="mute-btn" aria-label="آواز بند / چالو">🔊</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
